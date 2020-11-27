@@ -31,10 +31,13 @@ class ViewController: UIViewController {
     }
 
     @IBAction func actionButton(_ sender: Any) {
-        for unit in units {
-            if TF.text == unit.value {
-                resultLabel.text = String(unit.key)
+        
+        for hundred in hundreds {
+            if TF.text?.contains(hundred.value) == true {
+                resultLabel.text = hundred.value
                 return
+            } else {
+                resultLabel.text = "Введено неверное число"
             }
         }
     }
@@ -43,6 +46,14 @@ class ViewController: UIViewController {
 // MARK: - Text field delegate
 
 extension ViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        if textField.text?.isEmpty == false {
+            actionButton(button as Any)
+        }
+        return false
+    }
     
     @objc func textFieldChanged() {
         if TF.text?.isEmpty == false {
