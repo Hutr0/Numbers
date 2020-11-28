@@ -13,19 +13,18 @@ class ViewController: UIViewController {
     var unit: Int?
     var isTen: Bool? = false
     
-//    let unitsRus: Dictionary<Int,String> = [0: "ноль", 1: "один", 2: "два", 3: "три", 4: "четыре",
-//                                            5: "пять", 6: "шесть", -7: "семь", 7: "семь", 8: "восемь", 9: "девять"]
-//
-//    let tensRus: Dictionary<Int,String> = [10: "десять", 11: "одинадцать", 12: "двенадцать", 13: "тринадцать",
-//                                        14: "четрынадцать", 15: "пятнадцать", 16: "шестнадцать", 17: "семнадцать",
-//                                        18: "восемнадцать", 19: "девятнадцать", 20: "двадцать"]
-//
-//    let hundredsRus: Dictionary<Int,String> = [100: "сто", 200: "двести", 300: "триста",
-//                                            400: "четыреста", 500: "пятьсот", 600: "шестьсот",
-//                                            700: "семьсот", 800: "восемьсот", 900: "девятьсот"]
+    let unitsRus: Dictionary<Int,String> = [1: "аз", 2: "веди", 3: "глаголь", 4: "добро",
+                                            5: "есть", 6: "зело", 7: "земля", 8: "иже", 9: "фита"]
     
-    let units: Dictionary<String,Int> = ["null": 0, "ein": 1, "eins": 1, "zwan": 2, "zwei": 2, "drei": 3, "vier": 4, "funf": 5,
-                                         "sechs": 6, "sieb": 7, "sieben": 7, "acht": 8, "neun": 9]
+    let tensRus: Dictionary<Int,String> = [10: "и", 20:"како", 30: "люди", 40: "мыслете",
+                                           50: "наш", 60: "кси", 70: "он", 80: "покой", 90: "червь"]
+    
+    let hungredsRus: Dictionary<Int,String> = [100: "рцы", 200: "слово", 300: "твердь", 400: "ук",
+                                         500: "ферт", 600: "ха", 700: "пси", 800: "о", 900: "цы"]
+    
+    let units: Dictionary<String,Int> = ["null": 0, "ein": 1, "eins": 1, "zwan": 2,
+                                         "zwei": 2, "drei": 3, "vier": 4, "funf": 5, "sechs": 6,
+                                         "sieb": 7,"sieben": 7, "acht": 8, "neun": 9]
     
     let tens: Dictionary<String,Int> = ["zehn": 10, "elf": 11, "zwolf": 12, "dreizehn": 13,
                                         "vierzehn": 14, "funfzehn": 15, "sechzehn": 16, "siebzehn": 17,
@@ -89,7 +88,7 @@ class ViewController: UIViewController {
                     generalCenterfix = unit.value
                 }
                 if TF.text!.hasSuffix("\(unit.key)zig") {
-                    generalSuffix = unit.value
+                    generalSuffix = unit.value * 10
                 }
             }
         } else if isTen == nil {
@@ -101,13 +100,16 @@ class ViewController: UIViewController {
     
     func numberReworker(_ prefix: Int, _ centerfix: Int, _ suffix: Int) {
         
+        let subUnit: Int = suffix % 10
+        
         if isTen == true {
-            resultLabel.text = "\(prefix/100)\(suffix)"
+            resultLabel.text = "\(hungredsRus[prefix]!) \(tensRus[10]!) \(unitsRus[subUnit]!) \n (\(prefix/100)\(suffix/1))"
         } else if isTen == false {
-            resultLabel.text = "\(prefix/100)\(suffix)\(centerfix)"
+            resultLabel.text = "\(hungredsRus[prefix]!) \(tensRus[suffix]!) \(unitsRus[centerfix]!) \n (\(prefix/100)\(suffix/10)\(centerfix))"
         } else if isTen == nil {
-            resultLabel.text = "\(prefix/10)\(suffix)"
+            resultLabel.text = "\(hungredsRus[prefix]!) \(unitsRus[suffix]!) \n (\(prefix/10)\(suffix))"
         }
+        
         self.ten = nil
         self.unit = nil
         self.isTen = false

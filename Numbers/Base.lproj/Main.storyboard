@@ -65,7 +65,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Numbers" id="hLR-NB-wXc">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="info.circle" catalog="system" id="hkR-Tq-w2s"/>
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="info.circle" catalog="system" id="omO-ys-M3w">
+                            <connections>
+                                <segue destination="zbu-3B-Gol" kind="presentation" id="Sz0-Fm-PeW"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="TF" destination="bqD-Hx-i5Y" id="6m6-Wg-0Sc"/>
@@ -76,6 +80,44 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="963.07692307692309" y="79.620853080568722"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="cEl-33-RoJ">
+            <objects>
+                <viewController id="zbu-3B-Gol" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VRI-Tl-aTi">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Старославянские цифры" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HTS-uA-l5X">
+                                <rect key="frame" x="57.333333333333343" y="31" width="275.33333333333326" height="30"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Снимок экрана 2020-11-28 в 06.19.09 1" translatesAutoresizingMaskIntoConstraints="NO" id="Ifn-B6-eSa">
+                                <rect key="frame" x="15" y="235" width="358" height="321"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="358" id="9KM-Bt-fTN"/>
+                                    <constraint firstAttribute="height" constant="321" id="Z1B-Dt-caZ"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="eEZ-SB-o4w"/>
+                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Ifn-B6-eSa" firstAttribute="centerX" secondItem="eEZ-SB-o4w" secondAttribute="centerX" constant="-1" id="6Ce-7M-T9Z"/>
+                            <constraint firstItem="Ifn-B6-eSa" firstAttribute="centerY" secondItem="eEZ-SB-o4w" secondAttribute="centerY" constant="17.5" id="LF5-4i-G3e"/>
+                            <constraint firstItem="HTS-uA-l5X" firstAttribute="centerX" secondItem="eEZ-SB-o4w" secondAttribute="centerX" id="P23-e3-yJI"/>
+                            <constraint firstItem="HTS-uA-l5X" firstAttribute="top" secondItem="eEZ-SB-o4w" secondAttribute="top" constant="31" id="SmU-mP-QsR"/>
+                            <constraint firstItem="Ifn-B6-eSa" firstAttribute="top" relation="lessThanOrEqual" secondItem="HTS-uA-l5X" secondAttribute="bottom" constant="174" id="mWX-Gw-TIg"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="D7I-ZL-SLM"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Otp-b8-2s8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1941.5384615384614" y="79.620853080568722"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xuj-o6-3db">
@@ -101,6 +143,7 @@
     </scenes>
     <resources>
         <image name="info.circle" catalog="system" width="128" height="121"/>
+        <image name="Снимок экрана 2020-11-28 в 06.19.09 1" width="1130" height="1018"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
