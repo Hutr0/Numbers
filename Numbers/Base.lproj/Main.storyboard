@@ -16,30 +16,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Введите число на немецком" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bqD-Hx-i5Y">
-                                <rect key="frame" x="26" y="223.66666666666666" width="338" height="33.999999999999972"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
-                                <connections>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="XDP-h1-OsU"/>
-                                </connections>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DMT-AB-0mT">
-                                <rect key="frame" x="21" y="357" width="348" height="131"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="348" id="1S0-B9-MW8"/>
-                                    <constraint firstAttribute="height" constant="131" id="7K6-U6-H7B"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yrw-4Y-tJk">
-                                <rect key="frame" x="119" y="592" width="152" height="70"/>
+                                <rect key="frame" x="119" y="649" width="152" height="70"/>
                                 <color key="backgroundColor" systemColor="labelColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="152" id="4od-dI-uXA"/>
-                                    <constraint firstAttribute="height" constant="70" id="dcg-Gi-FAr"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="152" id="01D-e2-Ntk"/>
+                                    <constraint firstAttribute="height" constant="70" id="r3r-n3-bGs"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="tintColor" systemColor="secondarySystemBackgroundColor"/>
@@ -48,20 +30,43 @@
                                     <action selector="actionButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="evR-53-1UF"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Введите число на немецком" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bqD-Hx-i5Y">
+                                <rect key="frame" x="26" y="360" width="338" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="338" id="fCU-kx-6Z2"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="XDP-h1-OsU"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DMT-AB-0mT">
+                                <rect key="frame" x="16" y="163" width="358" height="131"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="131" id="GL5-cP-XmE"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="358" id="ayW-Sf-JgQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="yrw-4Y-tJk" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="3Ob-dc-zLy"/>
-                            <constraint firstItem="yrw-4Y-tJk" firstAttribute="top" secondItem="DMT-AB-0mT" secondAttribute="bottom" constant="104" id="7jV-Pv-OEJ"/>
-                            <constraint firstItem="DMT-AB-0mT" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="-26.5" id="Ejc-hh-tuX"/>
-                            <constraint firstItem="DMT-AB-0mT" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="MHE-P2-deo"/>
-                            <constraint firstItem="bqD-Hx-i5Y" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="26" id="V97-BN-23s"/>
-                            <constraint firstItem="DMT-AB-0mT" firstAttribute="top" secondItem="bqD-Hx-i5Y" secondAttribute="bottom" constant="99.333333333333371" id="X64-Yg-4M3"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bqD-Hx-i5Y" secondAttribute="trailing" constant="26" id="oIK-EU-1Qm"/>
+                            <constraint firstItem="yrw-4Y-tJk" firstAttribute="top" secondItem="bqD-Hx-i5Y" secondAttribute="bottom" constant="255" id="0LB-7S-I5u"/>
+                            <constraint firstItem="bqD-Hx-i5Y" firstAttribute="top" secondItem="DMT-AB-0mT" secondAttribute="bottom" constant="66" id="2Ka-LQ-ux4"/>
+                            <constraint firstItem="DMT-AB-0mT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="75" id="HV7-Hy-hLa"/>
+                            <constraint firstItem="DMT-AB-0mT" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="JvJ-ie-6VR"/>
+                            <constraint firstItem="yrw-4Y-tJk" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="los-jc-w0I"/>
+                            <constraint firstItem="bqD-Hx-i5Y" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="26" id="nhn-Zx-ScH"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bqD-Hx-i5Y" secondAttribute="trailing" constant="26" id="pwa-5t-oRZ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Numbers" id="hLR-NB-wXc"/>
+                    <navigationItem key="navigationItem" title="Numbers" id="hLR-NB-wXc">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="info.circle" catalog="system" id="hkR-Tq-w2s"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="TF" destination="bqD-Hx-i5Y" id="6m6-Wg-0Sc"/>
                         <outlet property="button" destination="yrw-4Y-tJk" id="LHq-3q-3Fp"/>
@@ -95,6 +100,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="info.circle" catalog="system" width="128" height="121"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

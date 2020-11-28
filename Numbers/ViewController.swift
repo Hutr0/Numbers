@@ -53,7 +53,7 @@ class ViewController: UIViewController {
             for ten in tens {
                 if TF.text!.contains(ten.key) {
                     self.ten = ten.value
-                    isTen = true                    
+                    isTen = true
                 }
             }
             for unit in units {
@@ -76,7 +76,6 @@ class ViewController: UIViewController {
         var generalSuffix: Int = 0
         
         for hundred in hundreds {
-            //let prefix: String = "\(unit.value)hundert"
             if TF.text!.hasPrefix(hundred.key) {
                 generalPrefix = hundred.value
             }
@@ -86,8 +85,6 @@ class ViewController: UIViewController {
             generalSuffix = ten!
         } else if isTen == false {
             for unit in units {
-                //let centerfix = "\(unit.value)und"
-                //let suffix = "\(unit.value)zig"
                 if TF.text!.contains("\(unit.key)und") {
                     generalCenterfix = unit.value
                 }
@@ -99,7 +96,6 @@ class ViewController: UIViewController {
             generalSuffix = unit!
         }
         
-        //resultLabel.text = generalPrefix + generalCenterfix + generalSuffix
         numberReworker(generalPrefix, generalCenterfix, generalSuffix)
     }
     
