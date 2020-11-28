@@ -10,6 +10,7 @@ import UIKit
 class ViewController: UIViewController {
     
     var ten: String?
+    var unit: String?
     
     let units: Dictionary<Int,String> = [0: "null", -1: "ein", 1: "eins", 2: "zwei", 3: "drei", 4: "vier", 5: "funf",
                                          6: "sechs", -7: "sieb", 7: "sieben", 8: "acht", 9: "neun"]
@@ -35,13 +36,21 @@ class ViewController: UIViewController {
     }
     
     @IBAction func actionButton(_ sender: Any) {
-        var isTen: Bool = false
+        var isTen: Bool? = false
         
         if TF.text!.contains("hundert") {
             for ten in tens {
                 if TF.text!.contains(ten.value) {
                     self.ten = ten.value
                     isTen = true
+                    break
+                }
+            }
+            for unit in units {
+                if TF.text!.hasSuffix(unit.value) {
+                    self.unit = unit.value
+                    isTen = nil
+                    break
                 }
             }
         } else {
@@ -51,7 +60,7 @@ class ViewController: UIViewController {
         numberRecognizer(isTen: isTen)
     }
     
-    func numberRecognizer(isTen: Bool) {
+    func numberRecognizer(isTen: Bool?) {
         var generalPrefix: String = ""
         var generalCenterfix: String = ""
         var generalSuffix: String = ""
@@ -63,9 +72,9 @@ class ViewController: UIViewController {
             }
         }
         
-        if isTen {
-            
-        } else {
+        if isTen == true {
+            generalSuffix = ten!
+        } else if isTen == false {
             for unit in units {
                 let centerfix = "\(unit.value)und"
                 let suffix = "\(unit.value)zig"
@@ -76,6 +85,8 @@ class ViewController: UIViewController {
                     generalSuffix = suffix
                 }
             }
+        } else if isTen == nil {
+            generalSuffix = unit!
         }
         
         resultLabel.text = generalPrefix + generalCenterfix + generalSuffix
