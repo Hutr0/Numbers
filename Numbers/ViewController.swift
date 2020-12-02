@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     let tensRus: Dictionary<Int,String> = [10: "и", 20:"како", 30: "люди", 40: "мыслете",
                                            50: "наш", 60: "кси", 70: "он", 80: "покой", 90: "червь"]
     
-    let hungredsRus: Dictionary<Int,String> = [100: "рцы", 200: "слово", 300: "твердь", 400: "ук",
+    let hundredsRus: Dictionary<Int,String> = [100: "рцы", 200: "слово", 300: "твердь", 400: "ук",
                                          500: "ферт", 600: "ха", 700: "пси", 800: "о", 900: "цы"]
     
     let units: Dictionary<String,Int> = ["null": 0, "ein": 1, "eins": 1, "zwan": 2,
@@ -103,11 +103,11 @@ class ViewController: UIViewController {
         let subUnit: Int = suffix % 10
         
         if isTen == true {
-            resultLabel.text = "\(hungredsRus[prefix]!) \(tensRus[10]!) \(unitsRus[subUnit]!) \n (\(prefix/100)\(suffix/1))"
+            resultLabel.text = "\(hundredsRus[prefix]!) \(tensRus[10]!) \(unitsRus[subUnit]!) \n (\(prefix/100)\(suffix/1))"
         } else if isTen == false {
-            resultLabel.text = "\(hungredsRus[prefix]!) \(tensRus[suffix]!) \(unitsRus[centerfix]!) \n (\(prefix/100)\(suffix/10)\(centerfix))"
+            resultLabel.text = "\(hundredsRus[prefix]!) \(tensRus[suffix] ?? "") \(unitsRus[centerfix] ?? "") \n (\(prefix/100)\(suffix/10)\(centerfix))"
         } else if isTen == nil {
-            resultLabel.text = "\(hungredsRus[prefix]!) \(unitsRus[suffix]!) \n (\(prefix/10)\(suffix))"
+            resultLabel.text = "\(hundredsRus[prefix]!) \(unitsRus[suffix]!) \n (\(prefix/10)\(suffix))"
         }
         
         self.ten = nil
