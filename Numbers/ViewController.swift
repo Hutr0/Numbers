@@ -12,6 +12,10 @@ class ViewController: UIViewController {
     var ten: Int?
     var unit: Int?
     var isTen: Bool? = false
+    var generalPrefix: Int = 0
+    var generalCenterfix: Int = 0
+    var generalSuffix: Int = 0
+    var words: Array<String> = []
     
     let unitsRus: Dictionary<Int,String> = [1: "аз", 2: "веди", 3: "глаголь", 4: "добро",
                                             5: "есть", 6: "зело", 7: "земля", 8: "иже", 9: "фита"]
@@ -20,7 +24,7 @@ class ViewController: UIViewController {
                                            50: "наш", 60: "кси", 70: "он", 80: "покой", 90: "червь"]
     
     let hundredsRus: Dictionary<Int,String> = [100: "рцы", 200: "слово", 300: "твердь", 400: "ук",
-                                         500: "ферт", 600: "ха", 700: "пси", 800: "о", 900: "цы"]
+                                               500: "ферт", 600: "ха", 700: "пси", 800: "о", 900: "цы"]
     
     let units: Dictionary<String,Int> = ["null": 0, "ein": 1, "eins": 1, "zwan": 2,
                                          "zwei": 2, "drei": 3, "vier": 4, "funf": 5, "sechs": 6,
@@ -48,48 +52,92 @@ class ViewController: UIViewController {
     
     @IBAction func actionButton(_ sender: Any) {
         
-        if TF.text!.contains("hundert") {
-            for ten in tens {
-                if TF.text!.contains(ten.key) {
-                    self.ten = ten.value
-                    isTen = true
-                }
-            }
-            for unit in units {
-                if TF.text!.hasSuffix(unit.key) {
-                    self.unit = unit.value
-                    isTen = nil
-                    break
-                }
-            }
-        } else {
-            resultLabel.text = "Введено неверное число"
-            return
-        }
+        toReadString()
         numberRecognizer()
     }
     
-    func numberRecognizer() {
-        var generalPrefix: Int = 0
-        var generalCenterfix: Int = 0
-        var generalSuffix: Int = 0
+    func toReadString() {
         
+        guard let string = TF.text else { return }
+        
+        if !string.contains("hundert") {
+            resultLabel.text = "Введено неверное число"
+        } else {
+            
+            var num: Int = 1
+            var word: String = ""
+            var lastChar: Character?
+            
+            for char in string {
+                if char != " " {
+                    word.append(char)
+                    if string.count == num {
+                        checkWord(word)
+                        words.append(word)
+                        word = ""
+                    }
+                } else {
+                    if lastChar != " " || lastChar == nil {
+                        checkWord(word)
+                        words.append(word)
+                        word = ""
+                    }
+                }
+                num += 1
+                lastChar = char
+//                if string.count == num {
+//                    if words.dropLast() != ["zig"] {
+//                        for unit in units {
+//                            if words[words.count-1] == unit.key {
+//                                self.unit = unit.value
+//                                isTen = nil
+//                                break
+//                            }
+//                        }
+//                    }
+//                }
+            }
+        }
+    }
+    
+    func checkWord(_ word: String) {
         for hundred in hundreds {
-            if TF.text!.hasPrefix(hundred.key) {
+            if word == hundred.key {
                 generalPrefix = hundred.value
             }
         }
+        for ten in tens {
+            if word == ten.key {
+                self.ten = ten.value
+                isTen = true
+            }
+        }
+    }
+    
+    func numberRecognizer() {
         
         if isTen == true {
             generalSuffix = ten!
         } else if isTen == false {
-            for unit in units {
-                if TF.text!.contains("\(unit.key)und") {
-                    generalCenterfix = unit.value
+            
+            var num: Int = 0
+            
+            for word in words {
+                if word == "und" {
+                    for unit in units {
+                        if words[num-1] == unit.key {
+                            generalCenterfix = unit.value
+                        }
+                    }
                 }
-                if TF.text!.hasSuffix("\(unit.key)zig") {
-                    generalSuffix = unit.value * 10
+                if word == "zig" {
+                    for unit in units {
+                        if words[num-1] == unit.key {
+                            generalSuffix = unit.value * 10
+                        }
+                    }
                 }
+                num += 1
             }
         } else if isTen == nil {
             generalSuffix = unit!
@@ -103,9 +151,9 @@ class ViewController: UIViewController {
         let subUnit: Int = suffix % 10
         
         if isTen == true {
-            resultLabel.text = "\(hundredsRus[prefix]!) \(tensRus[10]!) \(unitsRus[subUnit]!) \n (\(prefix/100)\(suffix/1))"
+            resultLabel.text = "\(hundredsRus[prefix]!) \(tensRus[10]!) \(unitsRus[subUnit] ?? "") \n (\(prefix/100)\(suffix/1))"
         } else if isTen == false {
-            resultLabel.text = "\(hundredsRus[prefix]!) \(tensRus[suffix] ?? "") \(unitsRus[centerfix] ?? "") \n (\(prefix/100)\(suffix/10)\(centerfix))"
+            resultLabel.text = "\(hundredsRus[prefix] ?? "") \(tensRus[suffix] ?? "") \(unitsRus[centerfix] ?? "") \n (\(prefix/100)\(suffix/10)\(centerfix))"
         } else if isTen == nil {
             resultLabel.text = "\(hundredsRus[prefix]!) \(unitsRus[suffix]!) \n (\(prefix/10)\(suffix))"
         }
@@ -113,6 +161,7 @@ class ViewController: UIViewController {
         self.ten = nil
         self.unit = nil
         self.isTen = false
+        words = []
     }
 }
 
