@@ -13,9 +13,8 @@ class ViewController: UIViewController {
     var unit: Int?
     var isTen: Bool? = false
     var generalPrefix: Int = 0
-    var generalCenterfix: Int = 0
-    var generalSuffix: Int = 0
     var words: Array<String> = []
+    var flag = false
     
     let unitsRus: Dictionary<Int,String> = [1: "аз", 2: "веди", 3: "глаголь", 4: "добро",
                                             5: "есть", 6: "зело", 7: "земля", 8: "иже", 9: "фита"]
@@ -53,7 +52,6 @@ class ViewController: UIViewController {
     @IBAction func actionButton(_ sender: Any) {
         
         toReadString()
-        numberRecognizer()
     }
     
     func toReadString() {
@@ -85,18 +83,8 @@ class ViewController: UIViewController {
                 }
                 num += 1
                 lastChar = char
-//                if string.count == num {
-//                    if words.dropLast() != ["zig"] {
-//                        for unit in units {
-//                            if words[words.count-1] == unit.key {
-//                                self.unit = unit.value
-//                                isTen = nil
-//                                break
-//                            }
-//                        }
-//                    }
-//                }
             }
+            numberRecognizer()
         }
     }
     
@@ -116,6 +104,9 @@ class ViewController: UIViewController {
     
     func numberRecognizer() {
         
+        var generalCenterfix: Int = 0
+        var generalSuffix: Int = 0
+        
         if isTen == true {
             generalSuffix = ten!
         } else if isTen == false {
@@ -127,6 +118,7 @@ class ViewController: UIViewController {
                     for unit in units {
                         if words[num-1] == unit.key {
                             generalCenterfix = unit.value
+                            flag = true
                         }
                     }
                 }
@@ -134,13 +126,24 @@ class ViewController: UIViewController {
                     for unit in units {
                         if words[num-1] == unit.key {
                             generalSuffix = unit.value * 10
+                            flag = true
                         }
                     }
                 }
                 num += 1
             }
         } else if isTen == nil {
-            generalSuffix = unit!
+            //generalSuffix = unit!
+        }
+        
+        if flag == false {
+            for unit in units {
+                if words[words.count-1] == unit.key {
+                    self.unit = unit.value
+                    generalSuffix = unit.value
+                    isTen = nil
+                }
+            }
         }
         
         numberReworker(generalPrefix, generalCenterfix, generalSuffix)
@@ -155,9 +158,10 @@ class ViewController: UIViewController {
         } else if isTen == false {
             resultLabel.text = "\(hundredsRus[prefix] ?? "") \(tensRus[suffix] ?? "") \(unitsRus[centerfix] ?? "") \n (\(prefix/100)\(suffix/10)\(centerfix))"
         } else if isTen == nil {
-            resultLabel.text = "\(hundredsRus[prefix]!) \(unitsRus[suffix]!) \n (\(prefix/10)\(suffix))"
+            resultLabel.text = "\(hundredsRus[prefix] ?? " /") \(unitsRus[suffix] ?? "*") \n (\(prefix/10)\(suffix))"
         }
         
+        generalPrefix = 0
         self.ten = nil
         self.unit = nil
         self.isTen = false
