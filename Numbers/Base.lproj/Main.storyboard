@@ -58,10 +58,11 @@
                             <constraint firstItem="yrw-4Y-tJk" firstAttribute="top" secondItem="bqD-Hx-i5Y" secondAttribute="bottom" constant="255" id="0LB-7S-I5u"/>
                             <constraint firstItem="bqD-Hx-i5Y" firstAttribute="top" secondItem="DMT-AB-0mT" secondAttribute="bottom" constant="66" id="2Ka-LQ-ux4"/>
                             <constraint firstItem="DMT-AB-0mT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="75" id="HV7-Hy-hLa"/>
-                            <constraint firstItem="DMT-AB-0mT" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="JvJ-ie-6VR"/>
+                            <constraint firstItem="DMT-AB-0mT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="LDx-rX-lBu"/>
                             <constraint firstItem="yrw-4Y-tJk" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="los-jc-w0I"/>
                             <constraint firstItem="bqD-Hx-i5Y" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="26" id="nhn-Zx-ScH"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bqD-Hx-i5Y" secondAttribute="trailing" constant="26" id="pwa-5t-oRZ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="DMT-AB-0mT" secondAttribute="trailing" constant="16" id="wAi-0o-6C5"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Numbers" id="hLR-NB-wXc">

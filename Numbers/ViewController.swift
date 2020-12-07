@@ -122,6 +122,8 @@ class ViewController: UIViewController {
     
     func numberRecognizer() {
         
+        var checker: Int = 0
+        var postChecker: Int = 0
         var preparedWord: String?
         var preparedNum: Int?
         var beforeUndWord: Dictionary<String?,Int?>?
@@ -148,6 +150,7 @@ class ViewController: UIViewController {
             }
         } else if isUnit == true {
             for word in words {
+                checker += 1
                 if word == "und" {
                     if beforeUndWord != nil {
                         resultLabel.text = "Введено неверное число3"
@@ -166,14 +169,20 @@ class ViewController: UIViewController {
                 }
                 for unit in units {
                     if word == unit.key {
+                        if postChecker+1 == checker {
+                            resultLabel.text = "Введено неверное число5"
+                            clear()
+                            return
+                        }
                         preparedNum = unit.value
                         preparedWord = word
+                        postChecker = checker
                         errorMessage = false
                     }
                 }
             }
             if errorMessage == true && words.count != 1 {
-                resultLabel.text = "Введено неверное число5"
+                resultLabel.text = "Введено неверное число6"
                 clear()
                 return
             }
@@ -186,7 +195,7 @@ class ViewController: UIViewController {
                 suf = preparedNum
             }
         } else if words.count > 1 {
-            resultLabel.text = "Введено неверное число6"
+            resultLabel.text = "Введено неверное число7"
             clear()
             return
         }
@@ -195,7 +204,7 @@ class ViewController: UIViewController {
             for hundred in hundreds {
                 if word == hundred.key {
                     if pref != nil {
-                        resultLabel.text = "Введено неверное число7"
+                        resultLabel.text = "Введено неверное число8"
                         clear()
                         return
                     }
