@@ -9,12 +9,22 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var ten: Int?
-    var unit: Int?
-    var isTen: Bool? = false
-    var generalPrefix: Int = 0
+    //    var ten: Int?
+    //    var unit: Int?
+    //    var isTen: Bool? = false
+    //    var generalPrefix: Int = 0
+    //    var flag = false
+    
     var words: Array<String> = []
-    var flag = false
+    var errorMessage: Bool = true
+    var isHundred: Bool = false
+    var isTen: Bool = false
+    var isUnit: Bool = false
+    var isSingle: Bool = false
+    
+    var pref: String?
+    var centf: String?
+    var suf: String?
     
     let unitsRus: Dictionary<Int,String> = [1: "аз", 2: "веди", 3: "глаголь", 4: "добро",
                                             5: "есть", 6: "зело", 7: "земля", 8: "иже", 9: "фита"]
@@ -51,18 +61,39 @@ class ViewController: UIViewController {
     
     @IBAction func actionButton(_ sender: Any) {
         
+        toCheckString()
         toReadString()
+    }
+    
+    func toCheckString() {
+        
+        let string = TF.text!
+        
+        for hundred in hundreds {
+            if string.contains(hundred.key) {
+                isHundred = true
+            }
+        }
+        for ten in tens {
+            if string.contains(ten.key) {
+                isTen = true
+            }
+        }
+        if isTen != true {
+            for unit in units {
+                if string.contains(unit.key) {
+                    isUnit = true
+                }
+            }
+        }
     }
     
     func toReadString() {
         
-        guard let string = TF.text else { return }
-        
-        if !string.contains("hundert") {
-            resultLabel.text = "Введено неверное число"
-        } else {
+        if isHundred == true && (isTen == true || isUnit == true) {
             
-            var num: Int = 1
+            let string = TF.text!
+            var num: Int = 0
             var word: String = ""
             var lastChar: Character?
             
@@ -70,13 +101,11 @@ class ViewController: UIViewController {
                 if char != " " {
                     word.append(char)
                     if string.count == num {
-                        checkWord(word)
                         words.append(word)
                         word = ""
                     }
                 } else {
                     if lastChar != " " || lastChar == nil {
-                        checkWord(word)
                         words.append(word)
                         word = ""
                     }
@@ -85,87 +114,127 @@ class ViewController: UIViewController {
                 lastChar = char
             }
             numberRecognizer()
-        }
-    }
-    
-    func checkWord(_ word: String) {
-        for hundred in hundreds {
-            if word == hundred.key {
-                generalPrefix = hundred.value
-            }
-        }
-        for ten in tens {
-            if word == ten.key {
-                self.ten = ten.value
-                isTen = true
-            }
+        } else {
+            resultLabel.text = "Введено неверное число1"
         }
     }
     
     func numberRecognizer() {
         
-        var generalCenterfix: Int = 0
-        var generalSuffix: Int = 0
+        var preparedWord: String?
+        var afterUndWord: String?
+        var afterZigWord: String?
         
         if isTen == true {
-            generalSuffix = ten!
-        } else if isTen == false {
-            
-            var num: Int = 0
-            
+            for word in words {
+                for ten in tens {
+                    if word == ten.key {
+                        suf = word
+                        errorMessage = false
+                        if isSingle == false {
+                            isSingle = true
+                        } else {
+                            errorMessage = true
+                        }
+                    }
+                }
+            }
+            if errorMessage == true {
+                resultLabel.text = "Введено неверное число2"
+                return
+            }
+        } else if isUnit == true {
             for word in words {
                 if word == "und" {
-                    for unit in units {
-                        if words[num-1] == unit.key {
-                            generalCenterfix = unit.value
-                            flag = true
-                        }
+                    if afterUndWord != nil {
+                        resultLabel.text = "Введено неверное число3"
+                        return
                     }
+                    afterUndWord = preparedWord
                 }
                 if word == "zig" {
-                    for unit in units {
-                        if words[num-1] == unit.key {
-                            generalSuffix = unit.value * 10
-                            flag = true
-                        }
+                    if afterZigWord != nil {
+                        resultLabel.text = "Введено неверное число4"
+                        return
+                    }
+                    afterZigWord = preparedWord
+                }
+                for unit in units {
+                    if word == unit.key {
+                        preparedWord = word
+                        errorMessage = false
                     }
                 }
-                num += 1
             }
-        } else if isTen == nil {
-            //generalSuffix = unit!
+            if errorMessage == true {
+                resultLabel.text = "Введено неверное число5"
+                return
+            }
+            if afterUndWord != nil && afterZigWord != nil {
+                centf = afterUndWord
+                suf = afterZigWord
+            } else if afterUndWord != nil && afterZigWord == nil {
+                centf = preparedWord
+            } else if afterUndWord == nil && afterZigWord == nil {
+                suf = preparedWord
+            }
+        } else if words.count > 1 {
+            resultLabel.text = "Введено неверное число6"
+            return
         }
         
-        if flag == false {
-            for unit in units {
-                if words[words.count-1] == unit.key {
-                    self.unit = unit.value
-                    generalSuffix = unit.value
-                    isTen = nil
-                }
+        for hundred in hundreds {
+            if words[0] == hundred.key {
+                pref = words[0]
+                errorMessage = false
             }
         }
-        
-        numberReworker(generalPrefix, generalCenterfix, generalSuffix)
+        if errorMessage == true {
+            resultLabel.text = "Введено неверное число7"
+            return
+        }
+        numberReworker()
     }
     
-    func numberReworker(_ prefix: Int, _ centerfix: Int, _ suffix: Int) {
+    func numberReworker() {
         
-        let subUnit: Int = suffix % 10
-        
-        if isTen == true {
-            resultLabel.text = "\(hundredsRus[prefix]!) \(tensRus[10]!) \(unitsRus[subUnit] ?? "") \n (\(prefix/100)\(suffix/1))"
-        } else if isTen == false {
-            resultLabel.text = "\(hundredsRus[prefix] ?? "") \(tensRus[suffix] ?? "") \(unitsRus[centerfix] ?? "") \n (\(prefix/100)\(suffix/10)\(centerfix))"
-        } else if isTen == nil {
-            resultLabel.text = "\(hundredsRus[prefix] ?? " /") \(unitsRus[suffix] ?? "*") \n (\(prefix/10)\(suffix))"
+        if centf != nil && suf != nil {
+            resultLabel.text = "\(pref ?? "") \(centf ?? "") \(suf ?? "")"
+        } else if centf != nil && suf == nil {
+            resultLabel.text = "\(pref ?? "") \(centf ?? "")"
+        } else if centf == nil && suf != nil {
+            resultLabel.text = "\(pref ?? "") \(suf ?? "")"
+        } else if centf == nil && suf == nil {
+            resultLabel.text = "\(pref ?? "")"
         }
         
-        generalPrefix = 0
-        self.ten = nil
-        self.unit = nil
-        self.isTen = false
         words = []
+        errorMessage = true
+        isHundred = false
+        isTen = false
+        isUnit = false
+        isSingle = false
+        
+        pref = nil
+        centf = nil
+        suf = nil
+        
+        
+        //        let subUnit: Int = suffix % 10
+        //
+        //        if isTen == true {
+        //            resultLabel.text = "\(hundredsRus[prefix]!) \(tensRus[10]!) \(unitsRus[subUnit] ?? "") \n (\(prefix/100)\(suffix/1))"
+        //        } else if isTen == false {
+        //            resultLabel.text = "\(hundredsRus[prefix] ?? "") \(tensRus[suffix] ?? "") \(unitsRus[centerfix] ?? "") \n (\(prefix/100)\(suffix/10)\(centerfix))"
+        //        } else if isTen == nil {
+        //            resultLabel.text = "\(hundredsRus[prefix] ?? "") \(unitsRus[suffix] ?? "") \n (\(prefix/10)\(suffix))"
+        //        }
+        //
+        //        generalPrefix = 0
+        //        self.ten = nil
+        //        self.unit = nil
+        //        self.isTen = false
+        //        words = []
     }
 }
 
