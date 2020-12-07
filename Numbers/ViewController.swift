@@ -123,7 +123,9 @@ class ViewController: UIViewController {
     func numberRecognizer() {
         
         var checker: Int = 0
-        var postChecker: Int = 0
+        var unitChecker: Int = 0
+        var undChecker: Int = 0
+        var zigChecker: Int = 0
         var preparedWord: String?
         var preparedNum: Int?
         var beforeUndWord: Dictionary<String?,Int?>?
@@ -152,31 +154,33 @@ class ViewController: UIViewController {
             for word in words {
                 checker += 1
                 if word == "und" {
-                    if beforeUndWord != nil {
+                    if beforeUndWord != nil || undChecker+1 == checker {
                         resultLabel.text = "Введено неверное число3"
                         clear()
                         return
                     }
                     beforeUndWord = [preparedWord: preparedNum]
+                    undChecker = checker
                 }
                 if word == "zig" {
-                    if beforeZigWord != nil {
+                    if beforeZigWord != nil || zigChecker+1 == checker {
                         resultLabel.text = "Введено неверное число4"
                         clear()
                         return
                     }
                     beforeZigWord = [preparedWord: preparedNum]
+                    zigChecker = checker
                 }
                 for unit in units {
                     if word == unit.key {
-                        if postChecker+1 == checker {
+                        if unitChecker+1 == checker {
                             resultLabel.text = "Введено неверное число5"
                             clear()
                             return
                         }
                         preparedNum = unit.value
                         preparedWord = word
-                        postChecker = checker
+                        unitChecker = checker
                         errorMessage = false
                     }
                 }
@@ -189,8 +193,6 @@ class ViewController: UIViewController {
             if beforeUndWord != nil && beforeZigWord != nil {
                 centf = beforeUndWord?.first?.value
                 suf = beforeZigWord?.first?.value
-            } else if beforeUndWord != nil && beforeZigWord == nil {
-                centf = preparedNum
             } else if beforeUndWord == nil && beforeZigWord == nil {
                 suf = preparedNum
             }
@@ -214,7 +216,7 @@ class ViewController: UIViewController {
             }
         }
         if errorMessage == true {
-            resultLabel.text = "Введено неверное число8"
+            resultLabel.text = "Введено неверное число9"
             clear()
             return
         }
@@ -241,8 +243,6 @@ class ViewController: UIViewController {
     }
     
     func clear() {
-        
-        
         
         words = []
         errorMessage = true
